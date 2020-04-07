@@ -14,6 +14,10 @@
                 <!-- 以下會說明如何建立『客製化』的 v-directive -->
                 <!-- 此處在提醒一下，v-提示="" 裡面的東西都是 javascript，所以若只是要顯示string，記得要加上'' -->
                 <p v-highlight="'red'">Ｃolor this with v-highlight!</p>
+
+                <!-- 以下建立『客製化』+『參數化』的 v-directive，此例的客製化參數為 background -->
+                <p v-highlight2:background="'red'">Ｃolor this with v-highlight2 and argument!</p>
+                <p v-highlight2="'red'">Ｃolor this with v-highlight2!</p>
             </div>
         </div>
     </div>
