@@ -22,7 +22,9 @@
                 <!-- 以下建立『客製化』+『參數化』+『有修飾詞』的 v-directive，此例的客製化參數為 background，修飾詞為 delayed -->
                 <p v-highlight3:background.delayed="'red'">Ｃolor this with v-highlight3 and argument and "delayed" modifiers!</p>
                 
-
+                <!-- 以下建立『local專用』的 v-directive -->
+                <p v-local-highlight4="'red'">Ｃolor this with v-local-highlight4!</p>
+                
             </div>
         </div>
     </div>
@@ -30,6 +32,14 @@
 
 <script>
     export default {
+        // 以下說明如何建立『local專用』的 v-directives
+        directives: {
+            'local-highlight4': {
+                bind: function(el, binding, vnode) { 
+                    el.style.backgroundColor = binding.value;
+                }
+            }
+        }
     }
 </script>
 
