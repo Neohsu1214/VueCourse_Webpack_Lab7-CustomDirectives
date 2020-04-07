@@ -25,8 +25,8 @@
                 <!-- 以下建立『local專用』的 v-directive -->
                 <p v-local-highlight4="'red'">Ｃolor this with v-local-highlight4!</p>
                 
-                <!-- 以下建立『local專用』的 v-directive，並實作傳入多個修飾詞 -->
-                <p v-local-highlight5:background.delayed.blink="'red'">Ｃolor this with v-highlight4 and argument and "delayed/blink" modifiers!</p>
+                <!-- 以下建立『local專用』的 v-directive，並實作傳入多個修飾詞 與多個值(透過javascript object)-->
+                <p v-local-highlight5:background.delayed.blink="{mainColor: 'red', secondColor: 'green', interval: 500}">Ｃolor this with v-highlight4 and argument and "delayed/blink" modifiers!</p>
                 
             </div>
         </div>
@@ -51,8 +51,8 @@
                     }
                     if (binding.modifiers['blink']) {
                         // 如果有 blink 修飾詞的話，就給他一閃一閃吧！
-                        let mainColor = binding.value;
-                        let secondColor = 'blue';
+                        let mainColor = binding.value.mainColor;
+                        let secondColor = binding.value.secondColor;
                         let currentColor = mainColor;
                         setTimeout(function() {
                             // 每秒做一次以下事情
@@ -64,15 +64,15 @@
                                 } else {
                                     el.style.color = currentColor;
                                 }
-                            }, 1000);                            
+                            }, binding.value.interval);
                         }, delay);
                     } else {
                         setTimeout(function() {
-                            // 以下邏輯是說：若有指定是改變background的顏色，則設定 backgroundColor=binding.value，否則就改變字體顏色
+                            // 以下邏輯是說：若有指定是改變background的顏色，則設定 backgroundColor=binding.value.mainColor，否則就改變字體顏色
                             if (binding.arg == 'background') {
-                                el.style.backgroundColor = binding.value;
+                                el.style.backgroundColor = binding.value.mainColor;
                             } else {
-                                el.style.color = binding.value;
+                                el.style.color = binding.value.mainColor;
                             }
                         }, delay);
                     }
