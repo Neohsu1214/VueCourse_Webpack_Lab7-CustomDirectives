@@ -18,6 +18,11 @@
                 <!-- 以下建立『客製化』+『參數化』的 v-directive，此例的客製化參數為 background -->
                 <p v-highlight2:background="'red'">Ｃolor this with v-highlight2 and argument!</p>
                 <p v-highlight2="'red'">Ｃolor this with v-highlight2!</p>
+
+                <!-- 以下建立『客製化』+『參數化』+『有修飾詞』的 v-directive，此例的客製化參數為 background，修飾詞為 delayed -->
+                <p v-highlight3:background.delayed="'red'">Ｃolor this with v-highlight3 and argument and "delayed" modifiers!</p>
+                
+
             </div>
         </div>
     </div>
