@@ -25,6 +25,9 @@
                 <!-- 以下建立『local專用』的 v-directive -->
                 <p v-local-highlight4="'red'">Ｃolor this with v-local-highlight4!</p>
                 
+                <!-- 以下建立『local專用』的 v-directive，並實作傳入多個修飾詞 -->
+                <p v-local-highlight5:background.delayed.blink="'red'">Ｃolor this with v-highlight4 and argument and "delayed/blink" modifiers!</p>
+                
             </div>
         </div>
     </div>
@@ -37,6 +40,44 @@
             'local-highlight4': {
                 bind: function(el, binding, vnode) { 
                     el.style.backgroundColor = binding.value;
+                }
+            },
+            'local-highlight5': {
+                bind: function(el, binding, vnode) { 
+                    // 以下示範有多個修飾詞時的處理
+                    var delay = 0;
+                    if (binding.modifiers['delayed']) { // modifiers是個array!
+                        delay = 3000;
+                    }
+                    if (binding.modifiers['blink']) {
+                        // 如果有 blink 修飾詞的話，就給他一閃一閃吧！
+                        let mainColor = binding.value;
+                        let secondColor = 'blue';
+                        let currentColor = mainColor;
+                        setTimeout(function() {
+                            // 每秒做一次以下事情
+                            setInterval(function() {
+                                currentColor == secondColor ? currentColor = mainColor : currentColor = secondColor;
+                                // 以下邏輯是說：若有指定是改變background的顏色，則設定 backgroundColor=binding.value，否則就改變字體顏色
+                                if (binding.arg == 'background') {
+                                    el.style.backgroundColor = currentColor;
+                                } else {
+                                    el.style.color = currentColor;
+                                }
+                            }, 1000);                            
+                        }, delay);
+                    } else {
+                        setTimeout(function() {
+                            // 以下邏輯是說：若有指定是改變background的顏色，則設定 backgroundColor=binding.value，否則就改變字體顏色
+                            if (binding.arg == 'background') {
+                                el.style.backgroundColor = binding.value;
+                            } else {
+                                el.style.color = binding.value;
+                            }
+                        }, delay);
+                    }
+                    
+                    
                 }
             }
         }
